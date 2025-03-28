@@ -1,0 +1,17 @@
+/* Global reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: 'Inter', sans-serif;
+  background-color: #1a202c; /* Dark mode background */
+  color: #edf2f7; /* Light text color */
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

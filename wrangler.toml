@@ -1,0 +1,24 @@
+name = "signage-pwa"
+type = "javascript"
+
+[env.production]
+workers_dev = false
+compatibility_date = "2025-03-28"
+account_id = "YOUR_ACCOUNT_ID"
+workers_namespace = "YOUR_WORKERS_NAMESPACE"
+route = "your_domain.com/*"
+zone_id = "YOUR_ZONE_ID"
+
+[env.dev]
+workers_dev = true
+compatibility_date = "2025-03-28"
+account_id = "YOUR_ACCOUNT_ID"
+workers_namespace = "YOUR_WORKERS_NAMESPACE_DEV"
+route = ""
+zone_id = ""
+
+[build]
+command = "npm run build"
+
+[deploy]
+commit = true
