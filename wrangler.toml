@@ -4,18 +4,18 @@ type = "javascript"
 [env.production]
 workers_dev = false
 compatibility_date = "2025-03-28"
-account_id = "YOUR_ACCOUNT_ID"
-workers_namespace = "YOUR_WORKERS_NAMESPACE"
-route = "your_domain.com/*"
-zone_id = "YOUR_ZONE_ID"
+account_id = "bfae875f0457ce7d595f0d23a897e5c9"
+workers_namespace = "signage-pwa-namespace"  # Replace with your Workers namespace
+route = "gravefury.com/*"  # Your custom domain
+zone_id = "your-zone-id"  # Replace with your Zone ID
 
 [env.dev]
 workers_dev = true
 compatibility_date = "2025-03-28"
-account_id = "YOUR_ACCOUNT_ID"
-workers_namespace = "YOUR_WORKERS_NAMESPACE_DEV"
-route = ""
-zone_id = ""
+account_id = "bfae875f0457ce7d595f0d23a897e5c9"  # Same Account ID
+workers_namespace = "signage-pwa-namespace-dev"  # Use a different namespace for dev
+route = ""  # Empty for dev since we're not routing directly
+zone_id = ""  # Empty for dev as well
 
 [build]
 command = "npm run build"
