@@ -1,19 +1,16 @@
-{
-  "compilerOptions": {
-    "target": "es2020",
-    "lib": ["es2020", "DOM"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "outDir": "dist",
-    "allowJs": false,
-    "isolatedModules": true
+module.exports = {
+  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: '#1e40af',
+        secondary: '#facc15',
+        muted: '#6b7280'
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif']
+      }
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  plugins: []
 }

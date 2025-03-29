@@ -1,35 +1,25 @@
 {
   "name": "signage-pwa",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tsc",
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
-    "lint": "eslint ."
-  },
+  "build": "npx @cloudflare/next-on-pages",
+  "deploy": "wrangler pages deploy ./out --project-name=signage-pwa"
+},
   "dependencies": {
-    "@cloudflare/workers-types": "^4.20250327.0",
-    "autoprefixer": "^10.0.0",
-    "next": "^15.2.4",
-    "postcss": "^8.0.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "tailwindcss": "^3.0.0",
-    "uuid": "^8.0.0",
-    "zod": "^3.0.0"
+    "@types/node": "22.13.14",
+    "@types/react": "19.0.12",
+    "@types/react-dom": "19.0.4",
+    "next": "15.2.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
+    "typescript": "5.8.2"
   },
   "devDependencies": {
-    "@types/cypress": "^0.1.6",
-    "@types/jest": "^29.5.14",
-    "@types/node": "^22.13.14",
-    "@types/react": "^19.0.12",
-    "@types/react-dom": "^19.0.4",
-    "@types/uuid": "^10.0.0",
-    "eslint": "^8.0.0",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.3.0",
-    "typescript": "^5.0.0",
-    "vitest": "^3.0.9"
+    "@cloudflare/next-on-pages": "^1.13.10",
+    "autoprefixer": "10.4.14",
+    "postcss": "^8.5.3",
+    "tailwindcss": "3.3.5",
+    "wrangler": "3.114.3"
   }
 }

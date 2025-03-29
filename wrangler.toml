@@ -1,18 +1,12 @@
 name = "signage-pwa"
-type = "javascript"
-compatibility_date = "2025-03-28"
-account_id = "bfae875f0457ce7d595f0d23a897e5c9"
-zone_id = "5bf7aa1aacbc2fc5fb3472d55467ea29"
-route = "gravefury.com/*"
-main = "dist/worker.js"
+compatibility_date = "2024-03-28"
+
+[build]
+command = "npm run pages:build"
+
+[site]
+bucket = "./out"
 
 [[kv_namespaces]]
-binding = "SIGNAGE_KV"
+binding = "KV"
 id = "21abd14b95cb42bf8aea8be7023c0d62"
-
-[env.dev]
-workers_dev = true
-
-[[env.dev.kv_namespaces]]
-binding = "SIGNAGE_KV"
-id = "073cc9fb84634507a25dd9df3029264d"
