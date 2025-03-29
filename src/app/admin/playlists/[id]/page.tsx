@@ -35,8 +35,8 @@ export default function PlaylistEditor() {
       item.duration = Number(value)
     } else if (item.type === 'text' && key === 'value') {
       item.value = value
-    } else if (key === 'src') {
-      item.src = value
+    } else if (['image', 'video', 'url'].includes(item.type) && key === 'src') {
+      item.src = value // Only update 'src' for image, video, and url types
     }
 
     updated[index] = item
