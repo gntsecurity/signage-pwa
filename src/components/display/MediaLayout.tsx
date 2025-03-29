@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface MediaItem {
   type: 'image' | 'video';
   src: string;
@@ -9,11 +11,10 @@ interface Layout {
   layoutType: 'grid' | 'single';
 }
 
-export function resolveLayout(layout: Layout) {
+export function resolveLayout(layout: Layout): JSX.Element[] | JSX.Element {
   const { layoutType, media } = layout;
 
   if (layoutType === 'grid') {
-    // Grid layout - we can split it into multiple rows/columns
     return media.map((item, index) => (
       <div key={index} className="w-full sm:w-1/2 md:w-1/3 p-2">
         {item.type === 'image' ? (
@@ -24,7 +25,6 @@ export function resolveLayout(layout: Layout) {
       </div>
     ));
   } else {
-    // Single item layout
     const item = media[0];
     return item.type === 'image' ? (
       <img src={item.src} alt="Media" className="w-full h-full object-contain" />
