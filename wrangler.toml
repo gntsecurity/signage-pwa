@@ -1,7 +1,5 @@
 name = "signage-pwa"
 compatibility_date = "2025-03-01"
-node_compat = true
-
 pages_build_output_dir = ".vercel/output/static"
 
 [[kv_namespaces]]
