@@ -1,26 +1,16 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { kv } from '../../../../lib/kv'
+import { NextRequest, NextResponse } from 'next/server'
+import { log } from '../../../../lib/log'
 
-export async function POST(req: NextRequest, { params }: { params: { code: string } }) {
-  const { id } = await req.json()
-  const { code } = params
-
-  if (!id || !code) {
-    return new NextResponse('Missing ID or code', { status: 400 })
-  }
-
-  await kv.put(`pair:${code}`, id, { expirationTtl: 300 })
-  return new NextResponse(null, { status: 204 })
+export async function GET(_req: NextRequest, { params }: { params: { code: string } }) {
+  const data = await kv.get(`pair:${params.code}`)
+  return data
+    ? NextResponse.json(JSON.parse(data))
+    : NextResponse.json({ error: 'Not found' }, { status: 404 })
 }
 
-export async function GET(_: NextRequest, { params }: { params: { code: string } }) {
-  const { code } = params
-
-  const id = await kv.get(`pair:${code}`)
-
-  if (!id) {
-    return new NextResponse('Invalid or expired code', { status: 404 })
-  }
-
-  return NextResponse.json({ id })
+export async function DELETE(_req: NextRequest, { params }: { params: { code: string } }) {
+  await kv.delete(`pair:${params.code}`)
+  await log('pair:delete', { code: params.code })
+  return NextResponse.json({ ok: true })
 }
