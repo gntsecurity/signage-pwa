@@ -1,7 +1,7 @@
-import { json, type APIRoute } from 'next/api';
+import { NextRequest, NextResponse } from 'next/server';
 import { v4 as uuidv4 } from 'uuid';
-import { deviceSchema } from '@/schemas/deviceSchema';
-import { DB } from '@/lib/db';
+import { deviceSchema } from '../../../schemas/deviceSchema';
+import { DB } from '../../../lib/db';
 
 export const POST: APIRoute = async ({ request }) => {
   try {

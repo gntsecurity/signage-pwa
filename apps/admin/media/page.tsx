@@ -1,6 +1,6 @@
 'use client';
 
-import MediaUploader from '@/components/admin/MediaUploader';
+import MediaUploader from '../../components/admin/MediaUploader';
 
 export default function AdminMediaPage() {
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import DeviceTable from '@/components/admin/DeviceTable';
+import DeviceTable from '@../../components/admin/DeviceTable';
 
 export default function AdminDevicesPage() {
   return (

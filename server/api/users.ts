@@ -1,6 +1,6 @@
 import { json, type APIRoute } from 'next/api';
-import { loginSchema } from '@/schemas/authSchema';
-import { DB } from '@/lib/db';
+import { loginSchema } from '../../../schemas/authSchema';
+import { DB } from '../../../lib/db';
 
 export const POST: APIRoute = async ({ request }) => {
   try {

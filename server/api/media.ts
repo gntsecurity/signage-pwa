@@ -1,6 +1,6 @@
-import { json, type APIRoute } from 'next/api';
-import { mediaSchema } from '@/schemas/mediaSchema';
-import { DB } from '@/lib/db';
+import { NextRequest, NextResponse } from 'next/server';
+import { mediaSchema } from '../../../schemas/mediaSchema';
+import { DB } from '../../../lib/db';
 import fs from 'fs';
 import path from 'path';
 

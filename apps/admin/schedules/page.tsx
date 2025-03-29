@@ -1,7 +1,7 @@
 'use client';
 
-import ScheduleList from '@/components/admin/ScheduleList';
-import ScheduleBuilder from '@/components/admin/ScheduleBuilder';
+import ScheduleList from '@../../components/admin/ScheduleList';
+import ScheduleBuilder from '../../components/admin/ScheduleBuilder';
 
 export default function AdminSchedulesPage() {
   return (

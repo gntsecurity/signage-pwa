@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { apiClient } from '@/lib/apiClient';
+import { apiClient } from '../../lib/apiClient';
 
 describe('Integration Tests', () => {
   it('should create a new schedule and return it', async () => {

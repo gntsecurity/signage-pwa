@@ -1,6 +1,6 @@
 import { json, type APIRoute } from 'next/api';
-import { scheduleSchema } from '@/schemas/scheduleSchema';
-import { DB } from '@/lib/db';
+import { scheduleSchema } from '../../../schemas/scheduleSchema';
+import { DB } from '../../../lib/db';
 
 export const GET: APIRoute = async () => {
   try {

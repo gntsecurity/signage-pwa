@@ -1,6 +1,6 @@
-import { json, type APIRoute } from 'next/api';
-import { deviceSchema } from '@/schemas/deviceSchema';
-import { DB } from '@/lib/db';
+import { NextRequest, NextResponse } from 'next/server';
+import { deviceSchema } from '../../../schemas/deviceSchema';
+import { DB } from '../../../lib/db';
 
 export const GET: APIRoute = async ({ request }) => {
   try {

@@ -5,11 +5,11 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import DisplayLayout from '@/components/display/DisplayLayout';
-import OfflineFallback from '@/components/display/OfflineFallback';
-import VersionChecker from '@/components/display/VersionChecker';
-import { useOffline } from '@/hooks/useOffline';
-import { useDisplayVersion } from '@/hooks/useDisplayVersion';
+import DisplayLayout from '../../components/display/DisplayLayout';
+import OfflineFallback from '../../components/display/OfflineFallback';
+import VersionChecker from '../../components/display/VersionChecker';
+import { useOffline } from '../../hooks/useOffline';
+import { useDisplayVersion } from '../../hooks/useDisplayVersion';
 
 export default function DisplayPage() {
   const [layoutData, setLayoutData] = useState<any>(null);

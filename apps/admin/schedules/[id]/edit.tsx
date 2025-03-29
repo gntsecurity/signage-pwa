@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
-import ScheduleBuilder from '@/components/admin/ScheduleBuilder';
+import ScheduleBuilder from '../../components/admin/ScheduleBuilder';
 
 export default function EditSchedulePage() {
   const params = useParams();

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
-import { apiClient } from '@/lib/apiClient'; // Importing the apiClient utility for testing
-import { deviceSchema } from '@/schemas/deviceSchema';
+import { apiClient } from '../../lib/apiClient';
+import { deviceSchema } from '../../schemas/deviceSchema';
 
 describe('API Tests', () => {
   it('should successfully pair a device', async () => {
