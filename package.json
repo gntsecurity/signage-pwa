@@ -20,9 +20,13 @@
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.13.10",
+    "@vercel/build-utils": "^10.5.1",
+    "@vercel/next": "^4.7.4",
+    "@vercel/static-build": "^2.7.6",
     "autoprefixer": "10.4.14",
     "postcss": "^8.5.3",
     "tailwindcss": "3.3.5",
+    "vercel": "^41.4.1",
     "wrangler": "3.114.3"
   }
 }
