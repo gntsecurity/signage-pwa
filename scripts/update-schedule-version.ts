@@ -1,4 +1,4 @@
-import { DB } from '@/lib/db';
+import { DB } from '../shared/lib/db';
 
 async function updateScheduleVersion(scheduleId: string, version: string) {
   try {

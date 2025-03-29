@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { triggerInstallPrompt } from '@/core/pwa';
+import { triggerInstallPrompt } from '../../core/pwa';
 
 export function usePWAInstall() {
   useEffect(() => {

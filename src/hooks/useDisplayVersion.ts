@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { apiClient } from '@/lib/apiClient';
+import { apiClient } from '../../shared/lib/apiClient';
 
 export function useDisplayVersion() {
   const [currentVersion, setCurrentVersion] = useState<string>('1.0.0');

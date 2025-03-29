@@ -1,4 +1,4 @@
-import { DB } from '@/lib/db';
+import { DB } from '../../shared/lib/db';
 import { v4 as uuidv4 } from 'uuid';
 
 export async function registerDevice(name: string): Promise<{ id: string, token: string }> {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useAuth } from '@/context/AuthProvider';
+import { useAuth } from '../../ui/context/AuthProvider';
 
 export function useAuthState() {
   const { user, login, logout } = useAuth();
