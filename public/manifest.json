@@ -1,0 +1,17 @@
+{
+  "name": "Signage PWA",
+  "short_name": "Signage PWA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e40af",
+  "theme_color": "#1e40af",
+  "orientation": "landscape",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}
