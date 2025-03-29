@@ -1,194 +1,107 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-
-interface ScheduleEntry {
-  playlistId: string
-  days: number[]
-  start: string
-  end: string
-}
+import { useParams } from 'next/navigation'
 
 interface Screen {
   id: string
   name: string
   location?: string
-  playlistId?: string
-  schedules?: ScheduleEntry[]
+  code?: string
 }
 
-interface Playlist {
-  id: string
-  name: string
-}
-
-export default function ScreenEditor() {
+export default function ScreenEditorPage() {
   const { id } = useParams<{ id: string }>()
-  const router = useRouter()
   const [screen, setScreen] = useState<Screen | null>(null)
-  const [playlists, setPlaylists] = useState<Playlist[]>([])
+  const [name, setName] = useState('')
+  const [location, setLocation] = useState('')
+  const [code, setCode] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(`/api/screens/${id}`)
-      .then((res) => res.json())
-      .then((data) => setScreen(data))
-
-    fetch('/api/playlists')
-      .then((res) => res.json())
-      .then((data) => setPlaylists(data))
+    if (id) fetchScreen()
   }, [id])
 
-  function updateSchedule(index: number, field: string, value: any) {
-    if (!screen || !screen.schedules) return
-    const updated = [...screen.schedules]
-    const entry = { ...updated[index] }
-
-    if (field === 'days') {
-      entry.days = value
-    } else {
-      entry[field as keyof ScheduleEntry] = value
-    }
-
-    updated[index] = entry
-    setScreen({ ...screen, schedules: updated })
+  async function fetchScreen() {
+    const res = await fetch(`/api/screens/${id}`)
+    const data = await res.json()
+    setScreen(data)
+    setName(data.name || '')
+    setLocation(data.location || '')
   }
 
-  function toggleDay(index: number, day: number) {
-    if (!screen || !screen.schedules) return
-    const entry = { ...screen.schedules[index] }
-    const has = entry.days.includes(day)
-    const next = has ? entry.days.filter((d) => d !== day) : [...entry.days, day]
-    updateSchedule(index, 'days', next)
-  }
+  async function handleUpdate(e: React.FormEvent) {
+    e.preventDefault()
 
-  function addSchedule() {
-    if (!screen) return
-    const next = screen.schedules ?? []
-    const entry: ScheduleEntry = {
-      playlistId: playlists[0]?.id ?? '',
-      days: [1, 2, 3, 4, 5],
-      start: '09:00',
-      end: '17:00'
-    }
-    setScreen({ ...screen, schedules: [...next, entry] })
-  }
-
-  function removeSchedule(index: number) {
-    if (!screen || !screen.schedules) return
-    const updated = [...screen.schedules]
-    updated.splice(index, 1)
-    setScreen({ ...screen, schedules: updated })
-  }
-
-  async function save() {
-    if (!screen) return
-    await fetch(`/api/screens/${screen.id}`, {
+    await fetch(`/api/screens/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(screen)
+      body: JSON.stringify({ name, location })
     })
-    router.push('/admin/screens')
+
+    fetchScreen()
+  }
+
+  async function generateCode() {
+    const res = await fetch('/api/pair/request', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    })
+
+    if (res.ok) {
+      const { code } = await res.json()
+      setCode(code)
+    }
   }
 
   if (!screen) {
-    return <div className="text-sm text-gray-500 p-4">Loading screen...</div>
+    return <div className="p-8 text-gray-500">Loading...</div>
   }
 
   return (
-    <div className="space-y-8 max-w-3xl">
-      <h2 className="text-xl font-semibold">Edit Screen</h2>
+    <div className="max-w-xl mx-auto p-8 space-y-8">
+      <h1 className="text-2xl font-bold">Edit Screen</h1>
 
-      <div className="space-y-4">
-        <label className="block text-sm">Name</label>
-        <input
-          className="border px-3 py-2 rounded w-full"
-          value={screen.name}
-          onChange={(e) => setScreen({ ...screen, name: e.target.value })}
-        />
-      </div>
-
-      <div className="space-y-4">
-        <label className="block text-sm">Location</label>
-        <input
-          className="border px-3 py-2 rounded w-full"
-          value={screen.location ?? ''}
-          onChange={(e) => setScreen({ ...screen, location: e.target.value })}
-        />
-      </div>
-
-      <div className="space-y-4">
-        <label className="block font-medium text-sm mb-2">Schedule</label>
-
-        {(screen.schedules ?? []).map((entry, i) => (
-          <div key={i} className="border p-4 bg-white rounded space-y-2 shadow-sm">
-            <div className="flex items-center gap-4">
-              <select
-                value={entry.playlistId}
-                onChange={(e) => updateSchedule(i, 'playlistId', e.target.value)}
-                className="border px-2 py-1 rounded"
-              >
-                {playlists.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name}
-                  </option>
-                ))}
-              </select>
-
-              <input
-                type="time"
-                value={entry.start}
-                onChange={(e) => updateSchedule(i, 'start', e.target.value)}
-                className="border px-2 py-1 rounded"
-              />
-
-              <span>→</span>
-
-              <input
-                type="time"
-                value={entry.end}
-                onChange={(e) => updateSchedule(i, 'end', e.target.value)}
-                className="border px-2 py-1 rounded"
-              />
-            </div>
-
-            <div className="flex gap-2 text-sm text-center">
-              {[0, 1, 2, 3, 4, 5, 6].map((d) => (
-                <button
-                  key={d}
-                  onClick={() => toggleDay(i, d)}
-                  className={`px-2 py-1 border rounded w-8 ${
-                    entry.days.includes(d) ? 'bg-blue-600 text-white' : 'bg-gray-100'
-                  }`}
-                >
-                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'][d]}
-                </button>
-              ))}
-            </div>
-
-            <button
-              onClick={() => removeSchedule(i)}
-              className="text-red-600 text-xs mt-1"
-            >
-              Delete
-            </button>
-          </div>
-        ))}
-
+      <form onSubmit={handleUpdate} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium">Name</label>
+          <input
+            className="border px-3 py-2 rounded w-full"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Location</label>
+          <input
+            className="border px-3 py-2 rounded w-full"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+          />
+        </div>
         <button
-          onClick={addSchedule}
-          className="bg-gray-200 text-sm px-3 py-1 rounded"
+          type="submit"
+          className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800"
         >
-          + Add Schedule
+          Save Changes
         </button>
-      </div>
+      </form>
 
-      <button
-        onClick={save}
-        className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800"
-      >
-        Save Screen
-      </button>
+      <div className="pt-8 border-t">
+        <h2 className="text-lg font-semibold mb-2">Pairing</h2>
+        <button
+          onClick={generateCode}
+          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-black"
+        >
+          Generate Pairing Code
+        </button>
+        {code && (
+          <div className="mt-4 text-center text-2xl font-mono bg-gray-100 border rounded py-2">
+            {code}
+          </div>
+        )}
+      </div>
     </div>
   )
 }
