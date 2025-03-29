@@ -16,7 +16,7 @@ interface Playlist {
 }
 
 export default function PlaylistEditor() {
-  const { id } = useParams<{ id: string }>()
+  const { id } = useParams() // No type argument here
   const router = useRouter()
   const [playlist, setPlaylist] = useState<Playlist | null>(null)
 

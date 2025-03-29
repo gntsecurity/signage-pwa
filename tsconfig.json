@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2022",
     "module": "esnext",
-    "jsx": "preserve",
+    "jsx": "react-jsx",  // Change 'preserve' to 'react-jsx' for better JSX handling
     "moduleResolution": "node",
     "allowJs": true,
     "esModuleInterop": true,
@@ -15,7 +15,8 @@
     "incremental": true,
     "resolveJsonModule": true,
     "types": ["node"],
-    "baseUrl": "."
+    "baseUrl": ".",
+    "lib": ["dom", "dom.iterable", "esnext"]  // Make sure you have these libs for browser/next.js
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
