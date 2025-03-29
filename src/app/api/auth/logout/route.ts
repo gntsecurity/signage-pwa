@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const res = new NextResponse(null, { status: 204 })
   res.cookies.set('session', '', {
     path: '/',
-    maxAge: 0
+    maxAge: 0,
   })
 
   return res

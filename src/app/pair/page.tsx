@@ -1,57 +1,51 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
-export default function PairPage() {
+export default function PairScreenPage() {
   const [code, setCode] = useState('')
   const [error, setError] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
+  const router = useRouter()
 
-  async function submit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    if (code.length !== 6) {
-      setError('Enter a 6-digit code.')
-      return
+    setError('')
+
+    const res = await fetch('/api/pair/verify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code }),
+    })
+
+    if (res.ok) {
+      const { id } = await res.json()
+      router.push(`/display/${id}`)
+    } else {
+      setError('Invalid or expired code. Please try again.')
     }
-
-    setStatus('loading')
-    const res = await fetch(`/api/pair/${code}`)
-    const data = await res.json()
-
-    if (!res.ok || !data?.id) {
-      setError('Invalid or expired code.')
-      setStatus('idle')
-      return
-    }
-
-    localStorage.setItem('signage-screen-id', data.id)
-    window.location.href = `/display/${data.id}`
   }
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center justify-center">
-      <form onSubmit={submit} className="space-y-6 text-center max-w-xs w-full">
-        <h1 className="text-2xl font-bold">Pair This Screen</h1>
-        <p className="text-gray-400 text-sm">Enter the 6-digit code from the admin panel.</p>
-
+    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100 text-center">
+      <h1 className="text-2xl font-bold mb-4">Enter Pairing Code</h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
         <input
+          type="text"
           value={code}
-          onChange={(e) => setCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-          inputMode="numeric"
-          className="w-full text-center text-3xl tracking-widest bg-gray-800 border border-gray-700 rounded px-4 py-3"
+          onChange={(e) => setCode(e.target.value)}
           placeholder="123456"
+          maxLength={6}
+          className="text-center text-xl px-4 py-2 border border-gray-300 rounded w-64"
         />
-
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-
         <button
           type="submit"
-          disabled={status === 'loading'}
-          className="w-full bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded disabled:opacity-50"
+          className="bg-blue-700 text-white px-6 py-2 rounded hover:bg-blue-800"
         >
-          {status === 'loading' ? 'Pairing...' : 'Pair Screen'}
+          Pair Screen
         </button>
       </form>
+      {error && <p className="text-red-600 mt-4">{error}</p>}
     </div>
   )
 }

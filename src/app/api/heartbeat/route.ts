@@ -1,21 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { kv } from '../../../../lib/kv'
-import { logEvent } from '../../../../lib/log'
+import { log } from '../../../../lib/log'
 
 export async function POST(req: NextRequest) {
   const { id } = await req.json()
 
   if (!id) {
-    return new NextResponse('Missing ID', { status: 400 })
+    return new NextResponse('Missing screen ID', { status: 400 })
   }
 
-  await kv.set(`heartbeat:${id}`, '1', { expirationTtl: 60 })
-
-  await logEvent({
-    type: 'heartbeat',
-    screenId: id,
-    timestamp: Date.now()
-  })
+  await kv.put(`status:${id}`, 'online', { expirationTtl: 60 })
+  await log({ type: 'ping', screenId: id })
 
   return new NextResponse(null, { status: 204 })
 }

@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
-import { getLogs } from '../../../../lib/log'
+import { listLogs } from '../../../../lib/log'
 
 export async function GET() {
-  const logs = await getLogs()
+  const logs = await listLogs()
   return NextResponse.json(logs)
 }
