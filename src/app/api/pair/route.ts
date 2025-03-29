@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '../../../../../lib/kv'
+import { kv } from '../../../lib/kv'
 
 function generateCode(): string {
   return Math.floor(100000 + Math.random() * 900000).toString()

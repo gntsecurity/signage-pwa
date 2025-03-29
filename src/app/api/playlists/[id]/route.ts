@@ -1,6 +1,6 @@
 import { kv } from '@/lib/kv'
 import { NextRequest, NextResponse } from 'next/server'
-import { log } from '@/lib/log'
+import { log } from '../../../../lib/kv'
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   const data = await kv.get(`playlist:${params.id}`)

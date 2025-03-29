@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '../../../../lib/kv'
-import { log } from '../../../../lib/log'
+import { kv } from '../../../lib/kv'
+import { log } from '../../../lib/log'
 
 export async function POST(req: NextRequest) {
   const { id } = await req.json()
