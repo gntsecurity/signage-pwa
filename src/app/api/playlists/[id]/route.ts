@@ -1,4 +1,4 @@
-import { kv } from '@/lib/kv'
+import { kv } from 'import { yourFunction } from '../../../../lib/kv';'
 import { NextRequest, NextResponse } from 'next/server'
 import { log } from '../../../../lib/kv'
 

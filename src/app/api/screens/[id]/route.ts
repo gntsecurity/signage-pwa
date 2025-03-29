@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '@/lib/kv'
-import { log } from '@/lib/log'
+import { yourFunction } from '../../../../lib/kv';
+import { yourLog } from '../../../../lib/log';
 
 export async function GET(_req: NextRequest, { params }: { params: { id: string } }) {
   const data = await kv.get(`screen:${params.id}`)
