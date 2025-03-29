@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { destroySession } from '../../../lib/session'
+import { destroySession } from '../../../../lib/session'
 
 export async function POST(req: NextRequest) {
   const token = req.cookies.get('session')?.value

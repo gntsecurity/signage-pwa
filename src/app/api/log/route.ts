@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { getLogs } from '@/lib/log'
+import { NextResponse } from 'next/server'
+import { getLogs } from '../../../../lib/log'
 
-export async function GET(_req: NextRequest) {
-  const logs = await getLogs(100)
-  return NextResponse.json({ logs })
+export async function GET() {
+  const logs = await getLogs()
+  return NextResponse.json(logs)
 }

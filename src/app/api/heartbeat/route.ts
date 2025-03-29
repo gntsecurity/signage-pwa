@@ -1,25 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { kv } from '@/lib/kv'
-import { log } from '@/lib/log'
+import { kv } from '../../../../lib/kv'
+import { logEvent } from '../../../../lib/log'
 
 export async function POST(req: NextRequest) {
   const { id } = await req.json()
 
   if (!id) {
-    return NextResponse.json({ error: 'Missing screen ID' }, { status: 400 })
+    return new NextResponse('Missing ID', { status: 400 })
   }
 
-  const now = Date.now().toString()
-  await kv.put(`heartbeat:${id}`, now)
-  await log('heartbeat', { id })
+  await kv.set(`heartbeat:${id}`, '1', { expirationTtl: 60 })
 
-  return NextResponse.json({ ok: true })
-}
+  await logEvent({
+    type: 'heartbeat',
+    screenId: id,
+    timestamp: Date.now()
+  })
 
-export async function GET(req: NextRequest) {
-  const id = req.nextUrl.searchParams.get('id')
-  if (!id) return NextResponse.json({ last: null })
-
-  const ts = await kv.get(`heartbeat:${id}`)
-  return NextResponse.json({ last: ts ?? null })
+  return new NextResponse(null, { status: 204 })
 }
